@@ -3,7 +3,8 @@ import pluginJs from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import pluginReact from 'eslint-plugin-react';
 import airbnb from 'eslint-config-airbnb';
-import airbnbTypescript from 'eslint-config-airbnb-typescript'; // Как добавить во flat конфиг правильно?
+import airbnbTypescript from 'eslint-config-airbnb-typescript';
+import eslintConfigPrettier from 'eslint-config-prettier';
 import { FlatCompat } from '@eslint/eslintrc';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -55,6 +56,8 @@ export default [
       ],
     },
   },
+
+  eslintConfigPrettier,
   {
     rules: {
       'import/extensions': [
@@ -71,6 +74,8 @@ export default [
       'implicit-arrow-linebreak': ['off'],
       'function-paren-newline': ['off'],
       indent: ['off'],
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': ['error'],
     },
   },
   {

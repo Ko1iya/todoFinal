@@ -18,10 +18,12 @@ class Header extends React.Component<HeaderProps, HeaderState> {
   }
 
   handlerKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const { props } = this;
+
     if (event.key === 'Enter') {
-      const { value } = (event.target as HTMLInputElement);
+      const { value } = event.target as HTMLInputElement;
       if (value.trim()) {
-        this.props.addTask(value);
+        props.addTask(value);
         this.setState({ value: '' });
       }
     }
@@ -32,6 +34,8 @@ class Header extends React.Component<HeaderProps, HeaderState> {
   };
 
   render() {
+    const { value } = this.state;
+
     return (
       <div className={styles.header}>
         <h1>todos</h1>
@@ -40,7 +44,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
           placeholder="What needs to be done?"
           onKeyDown={this.handlerKeyDown}
           onChange={this.handlerChange}
-          value={this.state.value}
+          value={value}
         />
       </div>
     );

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { formatDistanceToNow } from 'date-fns';
 import styles from './task.module.scss';
 
@@ -47,12 +49,13 @@ function Task(prop: TaskProps) {
               toggleTaskStateCompleted(id);
             }}
           />
-          <label>
+          <label htmlFor="input">
             <span
               className={styles.description}
               onClick={() => {
                 toggleTaskStateCompleted(id);
               }}
+              aria-hidden="true"
             >
               {children}
             </span>
@@ -62,16 +65,20 @@ function Task(prop: TaskProps) {
             </span>
           </label>
           <button
+            type="button"
             className={`${styles.icon} ${styles.iconEdit}`}
             onClick={() => {
               toggleTaskStateEditing(id);
             }}
+            aria-label="edit"
           />
           <button
+            type="button"
             className={`${styles.icon} ${styles.iconDestroy}`}
             onClick={() => {
               deleteTask(id);
             }}
+            aria-label="delete"
           />
         </div>
       ) : (

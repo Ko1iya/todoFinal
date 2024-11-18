@@ -9,17 +9,11 @@ interface FooterProps {
 }
 
 function Footer(prop: FooterProps) {
-  const {
- todoCount, selected, changeSelected, deleteCompleted,
-} = prop;
+  const { todoCount, selected, changeSelected, deleteCompleted } = prop;
 
   return (
     <div className={styles.footer}>
-      <span className={styles.todoCount}>
-        {todoCount}
-        {' '}
-        items left
-      </span>
+      <span className={styles.todoCount}>{todoCount} items left</span>
       <ul className={styles.filters}>
         <ButFilter
           handlerClass={selected === 'All' ? styles.selected : ''}
@@ -40,7 +34,11 @@ function Footer(prop: FooterProps) {
           Completed
         </ButFilter>
       </ul>
-      <button className={styles.clearCompleted} onClick={deleteCompleted}>
+      <button
+        type="button"
+        className={styles.clearCompleted}
+        onClick={deleteCompleted}
+      >
         Clear completed
       </button>
     </div>

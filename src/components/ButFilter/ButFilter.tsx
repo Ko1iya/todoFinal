@@ -1,34 +1,30 @@
 // import styles from './butFilter.module.scss';
-import React, { Component } from 'react';
+import React from 'react';
 
 interface ButFilterProps {
-  handlerClass?: string;
+  handlerClass: string;
   children: string;
-  innerState?: boolean;
-  handlerСhangeSelected?: (newState: string) => void;
+  handlerСhangeSelected: (newState: string) => void;
 }
 
-class ButFilter extends Component<ButFilterProps> {
-  render() {
-    const {
-      handlerClass: myClass = '',
-      children,
-      handlerСhangeSelected = () => {},
-    } = this.props;
-
-    return (
-      <li>
-        <button
-          className={myClass}
-          onClick={() => {
-            handlerСhangeSelected(children);
-          }}
-        >
-          {children}
-        </button>
-      </li>
-    );
-  }
+function ButFilter({
+  handlerClass = '',
+  children,
+  handlerСhangeSelected,
+}: ButFilterProps) {
+  return (
+    <li>
+      <button
+        type="button"
+        className={handlerClass}
+        onClick={() => {
+          handlerСhangeSelected(children);
+        }}
+      >
+        {children}
+      </button>
+    </li>
+  );
 }
 
 export default ButFilter;

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ITodoListProps } from '../../types';
 import Footer from '../Footer/Footer';
 import TodoList from '../TodoList/TodoList';

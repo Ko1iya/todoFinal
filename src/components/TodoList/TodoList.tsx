@@ -22,57 +22,36 @@ function TodoList(props: ITodoList) {
     toggleEditingToActive,
   } = props;
 
+  interface ITaskFilters {
+    [All: string]: ITask[];
+    Active: ITask[];
+    Completed: ITask[];
+  }
+
+  const taskFilters: ITaskFilters = {
+    All: tasks,
+    Active: tasks.filter((task) => task.taskState === 'active'),
+    Completed: tasks.filter((task) => task.taskState === 'completed'),
+  };
+
+  const filteredTasks: ITask[] = taskFilters[selected];
+
   return (
     <ul className={styles.todoList}>
-      {selected === 'All'
-        ? tasks.map((task: ITask) => (
-          <Task
-            key={task.id}
-            id={task.id}
-            taskState={task.taskState}
-            toggleTaskStateCompleted={toggleTaskStateCompleted}
-            deleteTask={deleteTask}
-            changeContent={changeContent}
-            toggleTaskStateEditing={toggleTaskStateEditing}
-            toggleEditingToActive={toggleEditingToActive}
-          >
-            {task.content}
-          </Task>
-          ))
-        : selected === 'Active'
-          ? tasks
-              .filter((task: ITask) => task.taskState === 'active')
-              .map((task: ITask) => (
-                <Task
-                  key={task.id}
-                  id={task.id}
-                  taskState={task.taskState}
-                  toggleTaskStateCompleted={toggleTaskStateCompleted}
-                  deleteTask={deleteTask}
-                  changeContent={changeContent}
-                  toggleTaskStateEditing={toggleTaskStateEditing}
-                  toggleEditingToActive={toggleEditingToActive}
-                >
-                  {task.content}
-                </Task>
-              ))
-          : selected === 'Completed'
-            && tasks
-              .filter((task: ITask) => task.taskState === 'completed')
-              .map((task: ITask) => (
-                <Task
-                  key={task.id}
-                  id={task.id}
-                  taskState={task.taskState}
-                  toggleTaskStateCompleted={toggleTaskStateCompleted}
-                  deleteTask={deleteTask}
-                  changeContent={changeContent}
-                  toggleTaskStateEditing={toggleTaskStateEditing}
-                  toggleEditingToActive={toggleEditingToActive}
-                >
-                  {task.content}
-                </Task>
-              ))}
+      {filteredTasks.map((task: ITask) => (
+        <Task
+          key={task.id}
+          id={task.id}
+          taskState={task.taskState}
+          toggleTaskStateCompleted={toggleTaskStateCompleted}
+          deleteTask={deleteTask}
+          changeContent={changeContent}
+          toggleTaskStateEditing={toggleTaskStateEditing}
+          toggleEditingToActive={toggleEditingToActive}
+        >
+          {task.content}
+        </Task>
+      ))}
     </ul>
   );
 }
