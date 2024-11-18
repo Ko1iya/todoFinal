@@ -1,0 +1,15 @@
+.button {
+  color: red;
+  padding: 10px;
+
+  span {
+    background: black;
+  }
+}
+
+.count {
+  width: 500px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
