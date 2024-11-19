@@ -112,17 +112,15 @@ class TodoApp extends Component<object, TodoAppState> {
   };
 
   handlerAddTask = (value: string) => {
-    const { tasks } = this.state;
+    this.setState(({ tasks }) => {
+      const newTask: ITask = {
+        id: tasks.length + 1,
+        taskState: 'active',
+        content: value,
+      };
 
-    const newTask: ITask = {
-      id: tasks.length + 1,
-      taskState: 'active',
-      content: value,
-    };
-
-    this.setState((prevState) => ({
-      tasks: [...prevState.tasks, newTask],
-    }));
+      return { tasks: [...tasks, newTask] };
+    });
   };
 
   handlerСhangeSelected = (newState: string) => {
