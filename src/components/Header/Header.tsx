@@ -39,13 +39,17 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     return (
       <div className={styles.header}>
         <h1>todos</h1>
-        <input
-          className={styles.newTodo}
-          placeholder="What needs to be done?"
-          onKeyDown={this.handlerKeyDown}
-          onChange={this.handlerChange}
-          value={value}
-        />
+        <form className={styles.newTodoForm}>
+          <input
+            className={styles.newTodo}
+            placeholder="What needs to be done?"
+            onKeyDown={this.handlerKeyDown}
+            onChange={this.handlerChange}
+            value={value}
+          />
+          <input className={styles.newTodoForm__timer} placeholder="Min" />
+          <input className={styles.newTodoForm__timer} placeholder="Sec" />
+        </form>
       </div>
     );
   }

@@ -51,7 +51,7 @@ function Task(prop: TaskProps) {
           />
           <label htmlFor="input">
             <span
-              className={styles.description}
+              className={styles.title}
               onClick={() => {
                 toggleTaskStateCompleted(id);
               }}
@@ -59,10 +59,20 @@ function Task(prop: TaskProps) {
             >
               {children}
             </span>
-            <span className={styles.created}>
-              created
-              {timeCreated}
+            <span className={styles.description}>
+              <button
+                aria-label="play"
+                type="button"
+                className={[styles.icon, styles.iconPlay].join(' ')}
+              />
+              <button
+                type="button"
+                className={[styles.icon, styles.iconPause].join(' ')}
+                aria-label="pause"
+              />
+              12:25
             </span>
+            <span className={styles.description}>created {timeCreated}</span>
           </label>
           <button
             type="button"
