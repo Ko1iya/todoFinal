@@ -20,7 +20,7 @@ class TodoApp extends Component<object, TodoAppState> {
         {
           id: 1,
           taskState: 'completed',
-          content: 'Completed task',
+          content: 'Completed',
           timeCreated: new Date().getTime(),
           timeTimer: 0,
           timerActive: false,
@@ -166,14 +166,14 @@ class TodoApp extends Component<object, TodoAppState> {
     });
   };
 
-  handlerAddTask = (value: string) => {
+  handlerAddTask = (value: string, min: number, sec: number) => {
     this.setState(({ tasks }) => {
       const newTask: ITask = {
         id: tasks.length + 1,
         taskState: 'active',
         content: value,
         timeCreated: new Date().getTime(),
-        timeTimer: 0,
+        timeTimer: min * 60 + sec,
         timerActive: false,
       };
 
