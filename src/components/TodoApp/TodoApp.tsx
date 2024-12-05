@@ -141,7 +141,7 @@ class TodoApp extends Component<object, TodoAppState> {
 
       return {
         tasks: newArr.map((task) =>
-          task.id === id
+          task.id === id && task.taskState === 'active'
             ? {
                 ...task,
                 timerActive: start,
