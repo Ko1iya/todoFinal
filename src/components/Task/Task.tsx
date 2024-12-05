@@ -18,12 +18,14 @@ interface TaskProps {
     e: React.KeyboardEvent<HTMLInputElement>,
     idProp: number,
   ) => void;
+  timeCreated: number;
+  timeTimer: number;
+  toggleTimer: (start: boolean, id: number) => void;
 }
 
 interface TaskState {
   timePassed: string;
   timeCreated: Date;
-  timeTimer: number;
 }
 
 class Task extends Component<TaskProps, TaskState> {
@@ -41,14 +43,14 @@ class Task extends Component<TaskProps, TaskState> {
 
   private refTimeCreate: ReturnType<typeof setInterval>;
 
-  private refTimeTimer: ReturnType<typeof setInterval>;
-
   constructor(props: TaskProps) {
     super(props);
+
+    const { timeCreated } = this.props;
+
     this.state = {
-      timeCreated: new Date(),
-      timePassed: '',
-      timeTimer: 0,
+      timeCreated: new Date(timeCreated),
+      timePassed: 'less than 5 seconds',
     };
   }
 
@@ -72,27 +74,13 @@ class Task extends Component<TaskProps, TaskState> {
 
   componentWillUnmount(): void {
     clearInterval(this.refTimeCreate);
-    clearInterval(this.refTimeTimer);
-  }
-
-  toggleTimer(stateTimer: boolean): void {
-    if (stateTimer) {
-      clearInterval(this.refTimeTimer);
-
-      return;
-    }
-
-    this.refTimeTimer = setInterval(() => {
-      this.setState((prevstate) => ({
-        timeTimer: prevstate.timeTimer + 1,
-      }));
-    }, 1000);
   }
 
   render() {
-    const { timePassed, timeTimer } = this.state;
+    const { timePassed } = this.state;
 
     const {
+      timeTimer,
       children,
       taskState,
       id,
@@ -101,6 +89,7 @@ class Task extends Component<TaskProps, TaskState> {
       changeContent,
       toggleTaskStateEditing,
       toggleEditingToActive,
+      toggleTimer,
     } = this.props;
 
     return (
@@ -131,7 +120,7 @@ class Task extends Component<TaskProps, TaskState> {
                   type="button"
                   className={[styles.icon, styles.iconPlay].join(' ')}
                   onClick={() => {
-                    this.toggleTimer(false);
+                    toggleTimer(true, id);
                   }}
                 />
                 <button
@@ -139,7 +128,7 @@ class Task extends Component<TaskProps, TaskState> {
                   className={[styles.icon, styles.iconPause].join(' ')}
                   aria-label="pause"
                   onClick={() => {
-                    this.toggleTimer(true);
+                    toggleTimer(false, id);
                   }}
                 />
                 {Task.formatSeconds(timeTimer)}

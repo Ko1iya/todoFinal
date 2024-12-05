@@ -17,9 +17,30 @@ class TodoApp extends Component<object, TodoAppState> {
     super(props);
     this.state = {
       tasks: [
-        { id: 1, taskState: 'completed', content: 'Completed task' },
-        { id: 2, taskState: 'completed', content: 'Editing task' },
-        { id: 3, taskState: 'active', content: 'Active task' },
+        {
+          id: 1,
+          taskState: 'completed',
+          content: 'Completed task',
+          timeCreated: new Date().getTime(),
+          timeTimer: 0,
+          timerActive: false,
+        },
+        {
+          id: 2,
+          taskState: 'completed',
+          content: 'Editing task',
+          timeCreated: new Date().getTime(),
+          timeTimer: 0,
+          timerActive: false,
+        },
+        {
+          id: 3,
+          taskState: 'active',
+          content: 'Active task',
+          timeCreated: new Date().getTime(),
+          timeTimer: 0,
+          timerActive: false,
+        },
       ],
       selected: 'All',
     };
@@ -97,6 +118,40 @@ class TodoApp extends Component<object, TodoAppState> {
     });
   };
 
+  tictackTimer = () => {
+    this.setState((prevState) => {
+      const newArr = [...prevState.tasks];
+
+      return {
+        tasks: newArr.map((task) =>
+          task.timerActive
+            ? {
+                ...task,
+                timeTimer: task.timeTimer + 1,
+              }
+            : task,
+        ),
+      };
+    });
+  };
+
+  toggleTimer = (start: boolean, id: number) => {
+    this.setState((prevState) => {
+      const newArr = [...prevState.tasks];
+
+      return {
+        tasks: newArr.map((task) =>
+          task.id === id
+            ? {
+                ...task,
+                timerActive: start,
+              }
+            : task,
+        ),
+      };
+    });
+  };
+
   handlerDeleteTask = (id: number) => {
     this.setState((prevState) => {
       const newArr = [...prevState.tasks];
@@ -117,6 +172,9 @@ class TodoApp extends Component<object, TodoAppState> {
         id: tasks.length + 1,
         taskState: 'active',
         content: value,
+        timeCreated: new Date().getTime(),
+        timeTimer: 0,
+        timerActive: false,
       };
 
       return { tasks: [...tasks, newTask] };
@@ -146,6 +204,8 @@ class TodoApp extends Component<object, TodoAppState> {
           changeContent={this.handlerChangeContent}
           toggleTaskStateEditing={this.handlertoggleTaskStateEditing}
           toggleEditingToActive={this.handlertoggleEditingToActive}
+          tictackTimer={this.tictackTimer}
+          toggleTimer={this.toggleTimer}
         />
       </section>
     );
