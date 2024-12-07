@@ -7,6 +7,7 @@ export interface ITask {
   timeTimer: number;
   timeCreated: number;
   timerActive: boolean;
+  lastTick: number;
 }
 
 export interface ITodoListProps {

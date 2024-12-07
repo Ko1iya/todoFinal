@@ -14,7 +14,7 @@ interface IMainProps extends ITodoListProps {
     e: React.ChangeEvent<HTMLInputElement>,
     idProp: number,
   ) => void;
-  tictackTimer: () => void;
+  tictackTimer: (newTime?: number, lastTick?: number) => void;
   toggleTimer: (start: boolean, id: number) => void;
 }
 

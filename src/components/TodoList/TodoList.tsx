@@ -1,3 +1,4 @@
+// TodoList.tsx
 import React, { useEffect } from 'react';
 import Task from '../Task/Task';
 import styles from './todoList.module.scss';
@@ -9,7 +10,7 @@ interface ITodoList extends ITodoListProps {
     e: React.ChangeEvent<HTMLInputElement>,
     idProp: number,
   ) => void;
-  tictackTimer: () => void;
+  tictackTimer: (newTime?: number, lastTick?: number) => void;
   toggleTimer: (start: boolean, id: number) => void;
 }
 

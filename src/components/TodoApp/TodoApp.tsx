@@ -13,6 +13,7 @@ function TodoApp() {
       timeCreated: new Date().getTime(),
       timeTimer: 0,
       timerActive: false,
+      lastTick: 0,
     },
     {
       id: 2,
@@ -21,6 +22,7 @@ function TodoApp() {
       timeCreated: new Date().getTime(),
       timeTimer: 0,
       timerActive: false,
+      lastTick: 0,
     },
     {
       id: 3,
@@ -29,6 +31,7 @@ function TodoApp() {
       timeCreated: new Date().getTime(),
       timeTimer: 0,
       timerActive: false,
+      lastTick: 0,
     },
   ]);
   const [selected, setSelected] = useState<string>('All');
@@ -89,10 +92,30 @@ function TodoApp() {
   };
 
   const tictackTimer = () => {
+    const newTime = new Date().getTime();
+
     setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.timerActive ? { ...task, timeTimer: task.timeTimer + 1 } : task,
-      ),
+      prevTasks.map((task) => {
+        if (task.timerActive) {
+          let finishTime = 0;
+
+          if (task.lastTick === 0) {
+            finishTime = 1;
+          } else {
+            finishTime = Math.round(
+              task.timeTimer + (newTime - task.lastTick) / 1000,
+            );
+          }
+
+          return {
+            ...task,
+            timeTimer: finishTime,
+            lastTick: newTime,
+          };
+        }
+
+        return task;
+      }),
     );
   };
 
@@ -100,7 +123,7 @@ function TodoApp() {
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task.id === id && task.taskState === 'active'
-          ? { ...task, timerActive: start }
+          ? { ...task, timerActive: start, lastTick: new Date().getTime() }
           : task,
       ),
     );
@@ -125,6 +148,7 @@ function TodoApp() {
         timeCreated: new Date().getTime(),
         timeTimer: min * 60 + sec,
         timerActive: false,
+        lastTick: 0,
       };
       return [...prevTasks, newTask];
     });
