@@ -4,6 +4,10 @@ export interface ITask {
   id: number;
   taskState: 'completed' | 'editing' | 'active';
   content: string;
+  timeTimer: number;
+  timeCreated: number;
+  timerActive: boolean;
+  lastTick: number;
 }
 
 export interface ITodoListProps {

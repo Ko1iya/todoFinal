@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Task from '../Task/Task';
 import styles from './todoList.module.scss';
 import { ITask, ITodoListProps } from '../../types';
@@ -9,6 +9,8 @@ interface ITodoList extends ITodoListProps {
     e: React.ChangeEvent<HTMLInputElement>,
     idProp: number,
   ) => void;
+  tictackTimer: () => void;
+  toggleTimer: (start: boolean, id: number) => void;
 }
 
 function TodoList(props: ITodoList) {
@@ -20,6 +22,7 @@ function TodoList(props: ITodoList) {
     changeContent,
     toggleTaskStateEditing,
     toggleEditingToActive,
+    toggleTimer,
   } = props;
 
   interface ITaskFilters {
@@ -36,6 +39,18 @@ function TodoList(props: ITodoList) {
 
   const filteredTasks: ITask[] = taskFilters[selected];
 
+  useEffect(() => {
+    const { tictackTimer } = props;
+
+    const timer = setInterval(() => {
+      tictackTimer();
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   return (
     <ul className={styles.todoList}>
       {filteredTasks.map((task: ITask) => (
@@ -48,6 +63,9 @@ function TodoList(props: ITodoList) {
           changeContent={changeContent}
           toggleTaskStateEditing={toggleTaskStateEditing}
           toggleEditingToActive={toggleEditingToActive}
+          timeTimer={task.timeTimer}
+          timeCreated={task.timeCreated}
+          toggleTimer={toggleTimer}
         >
           {task.content}
         </Task>

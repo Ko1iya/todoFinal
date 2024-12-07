@@ -14,6 +14,8 @@ interface IMainProps extends ITodoListProps {
     e: React.ChangeEvent<HTMLInputElement>,
     idProp: number,
   ) => void;
+  tictackTimer: () => void;
+  toggleTimer: (start: boolean, id: number) => void;
 }
 
 function Main(prop: IMainProps) {
@@ -28,6 +30,8 @@ function Main(prop: IMainProps) {
     toggleEditingToActive,
     selected,
     changeSelected,
+    toggleTimer,
+    tictackTimer,
   } = prop;
 
   return (
@@ -40,6 +44,8 @@ function Main(prop: IMainProps) {
         changeContent={changeContent}
         toggleTaskStateEditing={toggleTaskStateEditing}
         toggleEditingToActive={toggleEditingToActive}
+        tictackTimer={tictackTimer}
+        toggleTimer={toggleTimer}
       />
       <Footer
         todoCount={todoCount}
