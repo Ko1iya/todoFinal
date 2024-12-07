@@ -24,6 +24,7 @@ class TodoApp extends Component<object, TodoAppState> {
           timeCreated: new Date().getTime(),
           timeTimer: 0,
           timerActive: false,
+          lastTick: 0,
         },
         {
           id: 2,
@@ -32,6 +33,7 @@ class TodoApp extends Component<object, TodoAppState> {
           timeCreated: new Date().getTime(),
           timeTimer: 0,
           timerActive: false,
+          lastTick: 0,
         },
         {
           id: 3,
@@ -40,6 +42,7 @@ class TodoApp extends Component<object, TodoAppState> {
           timeCreated: new Date().getTime(),
           timeTimer: 0,
           timerActive: false,
+          lastTick: 0,
         },
       ],
       selected: 'All',
@@ -123,14 +126,28 @@ class TodoApp extends Component<object, TodoAppState> {
       const newArr = [...prevState.tasks];
 
       return {
-        tasks: newArr.map((task) =>
-          task.timerActive
-            ? {
-                ...task,
-                timeTimer: task.timeTimer + 1,
-              }
-            : task,
-        ),
+        tasks: newArr.map((task) => {
+          const newTime = new Date().getTime();
+          if (task.timerActive) {
+            let finishTime = 0;
+
+            if (task.lastTick === 0) {
+              finishTime = 1;
+            } else {
+              finishTime = Math.round(
+                task.timeTimer + (newTime - task.lastTick) / 1000,
+              );
+            }
+
+            return {
+              ...task,
+              timeTimer: finishTime,
+              lastTick: newTime,
+            };
+          }
+
+          return task;
+        }),
       };
     });
   };
@@ -145,6 +162,7 @@ class TodoApp extends Component<object, TodoAppState> {
             ? {
                 ...task,
                 timerActive: start,
+                lastTick: new Date().getTime(),
               }
             : task,
         ),
@@ -175,6 +193,7 @@ class TodoApp extends Component<object, TodoAppState> {
         timeCreated: new Date().getTime(),
         timeTimer: min * 60 + sec,
         timerActive: false,
+        lastTick: 0,
       };
 
       return { tasks: [...tasks, newTask] };
