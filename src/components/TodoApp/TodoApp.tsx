@@ -102,9 +102,7 @@ function TodoApp() {
           if (task.lastTick === 0) {
             finishTime = 1;
           } else {
-            finishTime = Math.round(
-              task.timeTimer + (newTime - task.lastTick) / 1000,
-            );
+            finishTime = task.timeTimer + (newTime - task.lastTick) / 1000;
           }
 
           return {

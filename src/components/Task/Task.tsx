@@ -98,7 +98,7 @@ function Task({
                 aria-label="pause"
                 onClick={() => toggleTimer(false, id)}
               />
-              {formatSeconds(timeTimer)}
+              {formatSeconds(Math.round(timeTimer))}
             </span>
             <span className={styles.description}>created {timePassed}</span>
           </label>
